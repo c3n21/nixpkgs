@@ -2890,6 +2890,10 @@ in
 
   sniprun = callPackage ./non-generated/sniprun { };
 
+  sonarlint-nvim = super.sonarlint-nvim.overrideAttrs {
+    dependencies = [nodejs];
+  };
+
   # The GitHub repository returns 404, which breaks the update script
   Spacegray-vim = buildVimPlugin {
     pname = "Spacegray.vim";
