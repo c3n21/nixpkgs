@@ -2892,6 +2892,7 @@ in
 
   sonarlint-nvim = super.sonarlint-nvim.overrideAttrs {
     dependencies = [nodejs];
+    patches = [./patches/sonarlint-nvim/sonarlint-clientNodePath.patch];
   };
 
   # The GitHub repository returns 404, which breaks the update script
