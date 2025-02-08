@@ -1,22 +1,17 @@
 diff --git a/lua/sonarlint.lua b/lua/sonarlint.lua
-index d952020..da7d3a6 100644
+index d952020..91bc0dd 100644
 --- a/lua/sonarlint.lua
 +++ b/lua/sonarlint.lua
-@@ -31,6 +31,7 @@ local function start_sonarlint_lsp(user_config)
-       productVersion = "0.1.0",
-       -- TODO: get workspace name
-       workspaceName = "some-workspace-name",
-+      clientNodePath = "/nix/store/k1r91cjalyc2mzzllpv5hklhqn8wvgjr-nodejs-22.12.0/bin/node",
-       firstSecretDetected = false,
-       showVerboseLogs = true,
-       platform = vim.loop.os_uname().sysname,
-@@ -130,6 +131,9 @@ local function start_sonarlint_lsp(user_config)
-       end,
+@@ -37,6 +37,12 @@ local function start_sonarlint_lsp(user_config)
+       architecture = vim.loop.os_uname().machine,
     }
  
-+   config.handlers["sonarlint/canShowMissingRequirementsNotification"] = function()
-+      return true
++   local pathToNodeExecutable = config.settings.sonarlint.pathToNodeExecutable
++
++   if type(pathToNodeExecutable) == "string" and pathToNodeExecutable ~= "" then
++      config.init_options.clientNodePath = pathToNodeExecutable
 +   end
-    config.on_init = init_with_config_notify(config.on_init, config.settings)
-    return vim.lsp.start_client(config)
- end
++
+    config.handlers = {}
+ 
+    config.handlers["sonarlint/isOpenInEditor"] = function(err, uri)
